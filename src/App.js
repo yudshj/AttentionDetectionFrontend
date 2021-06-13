@@ -1,79 +1,80 @@
-import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { PersonList } from "./PersonList";
-import {v4} from "uuid";
+import { v4 } from "uuid";
+import { Box, Container, TextField, Button, makeStyles, Grid } from "@material-ui/core";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+function randomRGB() {
+    let o = Math.floor, r = Math.random, s = 255.99;
+    return 'rgb(' + o(r()*s) + ',' + o(r()*s) + ',' + o(r()*s) + ')';
+}
 
-        this.state = {name: "", ip: "", port: 0, items: []}
-
-        this.handleNameChange = this.handleNameChange.bind(this);
-        this.handleIPChange = this.handleIPChange.bind(this);
-        this.handlePortChange = this.handlePortChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexGrow: 1,
+        backgroundColor: "grey.300"
+    },
+    p: {
+        padding: theme.spacing(1),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
+    item: {
+        flex: 1
     }
+}));
 
-    handleSubmit(e) {
-        e.preventDefault();
+const App: React.FC = (props) => {
+    const [inputs, setInputs] = useState({
+        name: "Yudong",
+        ip: "127.0.0.1",
+        port: 5000
+    })
+    const [items, setItems] = useState([]);
+
+    const classes = useStyles();
+
+    function handleSubmit(e) {
         const newPersonItem = {
-            name: this.state.name,
-            ip: this.state.ip,
-            port: this.state.port,
-            uuid: v4()
+            name: inputs.name,
+            ip: inputs.ip,
+            port: inputs.port,
+            uuid: v4(),
+            color: randomRGB()
         };
-        this.setState({items: this.state.items.concat(newPersonItem)})
+        setItems(items.concat(newPersonItem));
     }
 
-    handleNameChange(e) {
-        this.setState({name: e.target.value})
-    }
+    const handleInputChange = ({ target: { name, value } }) => { setInputs(ipt => ({ ...ipt, [name]: value })) }
+    // const handleInputChange = (data) => {console.log(data)}
 
-    handleIPChange(e) {
-        this.setState({ip: e.target.value})
-    }
-
-    handlePortChange(e) {
-        this.setState({port: e.target.value})
-    }
-
-    render() {
-        return (
-            <div className="App">
-                {/* <DynamicChart working={true}/> */}
-                <form onSubmit={this.handleSubmit}>
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>Name:</td>
-                            <td><input type="text" name="name" onChange={this.handleNameChange}/></td>
-                        </tr>
-                        <tr>
-                            <td>IP:</td>
-                            <td><input type="text" name="ipaddr" onChange={this.handleIPChange}/></td>
-                        </tr>
-                        <tr>
-                            <td>Port:</td>
-                            <td><input type="number" name="port" onChange={this.handlePortChange}/></td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">
-                                {this.state.name} : {this.state.ip} : {this.state.port}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan="2">
-                                <button id="add-ip-port-btn">Add</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-                <PersonList items={this.state.items}/>
-            </div>
-        );
-    }
+    return (
+        <div className={classes.root}>
+            <Container>
+                <Box m={1} display="flex" alignItems="center" justifyContent="center">
+                    <Grid container spacing={3}>
+                        <Grid item xs={4} className={classes.item}>
+                            <TextField label="Name:" type="text" name="name" key="name" onChange={handleInputChange} value={inputs.name} />
+                        </Grid>
+                        <Grid item xs={4} className={classes.item}>
+                            <TextField label="IP:" type="text" name="ip" key="ip" onChange={handleInputChange} value={inputs.ip} />
+                        </Grid>
+                        <Grid item xs={4} className={classes.item}>
+                            <TextField label="Port:" type="number" name="port" key="port" onChange={handleInputChange} value={inputs.port} />
+                        </Grid>
+                        <Grid item xs={6} className={classes.item}>
+                            <p>{inputs.name} @ {inputs.ip}:{inputs.port}</p>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Button variant="contained" color="primary" id="add-ip-port-btn" onClick={handleSubmit}>Add</Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+                <PersonList items={items} />
+            </Container>
+        </div>
+    );
 }
 
 export default App;
