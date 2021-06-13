@@ -10,7 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
-import { Box } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -68,10 +68,10 @@ export const Person: React.FC = function Person(props) {
 
     return (
         <div>
-            <Paper><Box p={3} m={5}>
-                <h2>{props.name}</h2>
-                <DynamicChart data={data} name={props.name} color={props.color}/>
-                <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
+            <Paper>
+                <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
+                <Grid item><h2>{props.name}</h2></Grid>
+                <Grid item><ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
                     <Button startIcon={<PlayIcon/>} onClick={() => { setWorking(!working); }}>开始/结束监控</Button>
 
                     <Button startIcon={<CameraIcon/>} onClick={() => {
@@ -88,7 +88,13 @@ export const Person: React.FC = function Person(props) {
 
                     <Button startIcon={<DeleteIcon />} color="secondary">删除</Button>
                 </ButtonGroup>
-            </Box></Paper>
+                </Grid>
+            </Grid>
+
+            {/* <Grid item> */}
+                <DynamicChart data={data} name={props.name} color={props.color}/>
+                {/* </Grid> */}
+            </Paper>
 
             <Dialog
                 open={showCamera}
