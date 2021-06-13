@@ -35,9 +35,7 @@ export const DynamicChart: React.FC = function (props) {
                 markLine: {
                     silent: true,
                     lineStyle: {
-                      normal: {
-                        color: '#b00020'                   // 这儿设置安全基线颜色
-                      }
+                        color: '#b00020'
                     },
                     data: [{
                         yAxis: 0.15
