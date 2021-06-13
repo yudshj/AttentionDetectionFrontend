@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
+import { themeName } from './mydarkmode';
 
 export const DynamicChart: React.FC = function (props) {
     const option = {
@@ -51,6 +52,7 @@ export const DynamicChart: React.FC = function (props) {
     return <ReactECharts
         option={option}
         style={{height: 350}}
+        theme={props.theme === "dark" ? themeName : "light"}
     />;
 }
 

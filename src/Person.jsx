@@ -10,11 +10,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
-import { Grid, Box } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import PlayIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
 
 const TOTAL_POINT = 30;
 
@@ -92,7 +91,7 @@ export const Person: React.FC = function Person(props) {
             </Grid>
 
             {/* <Grid item> */}
-                <DynamicChart data={data} name={props.name} color={props.color}/>
+                <DynamicChart data={data} name={props.name} color={props.color} theme={props.theme}/>
                 {/* </Grid> */}
             </Paper>
 

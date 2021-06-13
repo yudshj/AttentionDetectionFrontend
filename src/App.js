@@ -1,19 +1,20 @@
-import React, {useState} from 'react';
-import {PersonList} from "./PersonList";
-import {v4} from "uuid";
-import {Fab, Box, Container, TextField, Button, makeStyles, Grid, Zoom} from "@material-ui/core";
+import React, { useState } from 'react';
+import { PersonList } from "./PersonList";
+import { v4 } from "uuid";
+import { Fab, Container, TextField, Button, makeStyles, Box, Grid } from "@material-ui/core";
 import AddIcon from '@material-ui/icons/Add';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
-import { MaterialPicker } from 'react-color';
+import { TwitterPicker } from 'react-color';
 import { OrderedMap } from 'immutable';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 function randomRGB() {
-    return "#" + Math.floor(Math.random()*16777215).toString(16);
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexWrap: 'wrap',
         flexGrow: 1,
-        backgroundColor: "grey.300",
     },
     item: {
         flex: 1
@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
         verticalAlign: 'center',
         width: '100vw',
         height: '100vh',
-        color: 'grey',
-        fontSize: 20
     }
 }));
 
@@ -54,6 +52,17 @@ const App: React.FC = (props) => {
     const [items, setItems] = useState(OrderedMap());
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState("#000")
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
+    const theme = React.useMemo(
+        () =>
+            createMuiTheme({
+                palette: {
+                    type: prefersDarkMode ? 'dark' : 'light',
+                },
+            }),
+        [prefersDarkMode],
+    );
 
     const classes = useStyles();
 
@@ -84,48 +93,61 @@ const App: React.FC = (props) => {
         setItems(items.delete(uuid));
     }
 
-    const handleInputChange = ({target: {name, value}}) => {
-        setInputs(ipt => ({...ipt, [name]: value}))
+    const handleInputChange = ({ target: { name, value } }) => {
+        setInputs(ipt => ({ ...ipt, [name]: value }))
     }
     // const handleInputChange = (data) => {console.log(data)}
 
     return (
-        <div className={classes.root}>
-            {items.size === 0 ?
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <div className={classes.root}>
+                {items.size === 0 ?
 
-                <div className={classes.bigGreyCaption}>
-                    <h1>请点击右下方的按钮添加后端</h1>
-                </div> :
-                <Container>
-                    <PersonList items={items} deleteCallback={deleteItem}/>
-                </Container>
-            }
-            <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
-                <AddIcon/>
-            </Fab>
+                    <div className={classes.bigGreyCaption}>
+                        <Box color="text.secondary" fontSize="h2.fontSize">请点击右下方的按钮添加后端</Box>
+                    </div> :
+                    <Container>
+                        <PersonList items={items} deleteCallback={deleteItem} theme={prefersDarkMode ? 'dark' : 'light'}/>
+                    </Container>
+                }
+                <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
+                    <AddIcon />
+                </Fab>
 
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">监控后端信息</DialogTitle>
-                <DialogContent>
-                    <TextField label="Name:" type="text" name="name" key="name" onChange={handleInputChange}
-                               value={inputs.name}/>
-                    <TextField label="IP:" type="text" name="ip" key="ip" onChange={handleInputChange}
-                               value={inputs.ip}/>
-                    <TextField label="Port:" type="number" name="port" key="port" onChange={handleInputChange}
-                               value={inputs.port}/>
-                    <p>{inputs.name} @ {inputs.ip}:{inputs.port}</p>
-                    <MaterialPicker color={color} onChangeComplete={(x)=>setColor(x.hex)}/>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        取消
-                    </Button>
-                    <Button onClick={handleSubmit} color="primary">
-                        确认
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">监控后端信息</DialogTitle>
+                    <DialogContent>
+                        <Grid container direction="row" spacing={2}>
+                            <Grid item>
+                                <Grid container direction="column" spacing={2}>
+                                    <Grid item><TextField label="Name:" type="text" name="name" key="name" onChange={handleInputChange}
+                                        value={inputs.name} /></Grid>
+                                    <Grid item><TextField label="IP:" type="text" name="ip" key="ip" onChange={handleInputChange}
+                                        value={inputs.ip} /></Grid>
+                                    <Grid item><TextField label="Port:" type="number" name="port" key="port" onChange={handleInputChange}
+                                        value={inputs.port} /></Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <Grid container direction="column" spacing={2}>
+                                    <Grid item><p>{inputs.name} @ {inputs.ip}:{inputs.port}</p></Grid>
+                                    <Grid item><TwitterPicker color={color} onChangeComplete={(x) => setColor(x.hex)} /></Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            取消
+                        </Button>
+                        <Button onClick={handleSubmit} color="primary">
+                            确认
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        </ThemeProvider>
     );
 }
 
