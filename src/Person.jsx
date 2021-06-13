@@ -86,7 +86,7 @@ export const Person: React.FC = function Person(props) {
                             });
                     }}>打开摄像头</Button>
 
-                    <Button startIcon={<DeleteIcon />} color="secondary">删除</Button>
+                    <Button startIcon={<DeleteIcon />} onClick={()=>{props.deleteCallback(props.uuid)}} color="secondary">删除</Button>
                 </ButtonGroup>
                 </Grid>
             </Grid>
@@ -109,7 +109,7 @@ export const Person: React.FC = function Person(props) {
                             <DialogContentText>
                                 未检测到人脸。
                             </DialogContentText> :
-                            <img id={"cam-" + props.uuid} alt={props.name + " Camara Picture"} src={"data:image/jpg;base64," + imgBase64} />
+                            <img id={"camera"} alt={props.name + " Camara Picture"} src={"data:image/jpg;base64," + imgBase64} />
                     }
                 </DialogContent>
                 <DialogActions>

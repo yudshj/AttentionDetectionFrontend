@@ -2,18 +2,17 @@ import React from 'react';
 import { Person } from './Person';
 import { Box, Grid } from '@material-ui/core';
 
-export class PersonList extends React.Component {
-    render() {
-        return (
-            <Box id="PersonList">
-                <Grid container spacing={2}>
-                {this.props.items.map(item => (
-                    <Grid item xs={6}>
-                    <Person key={item.uuid} uuid={item.uuid} name={item.name} ip={item.ip} port={item.port} color={item.color}/>
-                    </Grid>
-                ))}
+export const PersonList:React.FC = (props) => {
+    return (
+        <Box id="PersonList">
+            <p>{props.items.size}</p>
+            <Grid container spacing={2}>
+            {props.items.entrySeq().map(([key, item]) => (
+                <Grid item xs={6} key={key}>
+                <Person uuid={key} name={item.name} ip={item.ip} port={item.port} color={item.color} deleteCallback={props.deleteCallback}/>
                 </Grid>
-            </Box>
-        );
-    }
+            ))}
+            </Grid>
+        </Box>
+    );
 }

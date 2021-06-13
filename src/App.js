@@ -10,6 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import { MaterialPicker } from 'react-color';
+import { OrderedMap } from 'immutable';
 
 function randomRGB() {
     return "#" + Math.floor(Math.random()*16777215).toString(16);
@@ -50,21 +51,22 @@ const App: React.FC = (props) => {
         ip: "127.0.0.1",
         port: 5000
     })
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(OrderedMap());
     const [open, setOpen] = useState(false);
     const [color, setColor] = useState("#000")
 
     const classes = useStyles();
 
     function handleSubmit() {
+        const uuid = v4();
+        console.log(uuid);
         const newPersonItem = {
             name: inputs.name,
             ip: inputs.ip,
             port: inputs.port,
-            uuid: v4(),
-            color: color
+            color
         };
-        setItems(items.concat(newPersonItem));
+        setItems(items.set(uuid, newPersonItem));
         setOpen(false);
     }
 
@@ -77,6 +79,11 @@ const App: React.FC = (props) => {
         setColor(randomRGB());
     }
 
+    const deleteItem = (uuid) => {
+        console.log("delete:", uuid)
+        setItems(items.delete(uuid));
+    }
+
     const handleInputChange = ({target: {name, value}}) => {
         setInputs(ipt => ({...ipt, [name]: value}))
     }
@@ -84,13 +91,13 @@ const App: React.FC = (props) => {
 
     return (
         <div className={classes.root}>
-            {items.length === 0 ?
+            {items.size === 0 ?
 
                 <div className={classes.bigGreyCaption}>
                     <h1>请点击右下方的按钮添加后端</h1>
                 </div> :
                 <Container>
-                    <PersonList items={items}/>
+                    <PersonList items={items} deleteCallback={deleteItem}/>
                 </Container>
             }
             <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
