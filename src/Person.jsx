@@ -11,6 +11,10 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import { Box } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CameraIcon from '@material-ui/icons/PhotoCamera';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 const TOTAL_POINT = 30;
 
@@ -66,12 +70,11 @@ export const Person: React.FC = function Person(props) {
         <div>
             <Paper><Box p={3} m={5}>
                 <h2>{props.name}</h2>
-                <p>{url}</p>
                 <DynamicChart data={data} name={props.name} color={props.color}/>
                 <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button onClick={() => { setWorking(!working); }}>开始/结束监控</Button>
+                    <Button startIcon={<PlayIcon/>} onClick={() => { setWorking(!working); }}>开始/结束监控</Button>
 
-                    <Button onClick={() => {
+                    <Button startIcon={<CameraIcon/>} onClick={() => {
                         $.getJSON(url + '/camera')
                             .done((data) => {
                                 setImgBase64(data.value);
@@ -82,6 +85,8 @@ export const Person: React.FC = function Person(props) {
                                 console.log("Camera fetch failed:" + data.readyState);
                             });
                     }}>打开摄像头</Button>
+
+                    <Button startIcon={<DeleteIcon />} color="secondary">删除</Button>
                 </ButtonGroup>
             </Box></Paper>
 
