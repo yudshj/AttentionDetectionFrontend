@@ -16,7 +16,6 @@ export const DynamicChart: React.FC = function (props) {
         yAxis: [
             {
                 type: 'value',
-                name: '专注度',
                 max: 1.5,
                 min: -1.5,
             }
@@ -39,7 +38,7 @@ export const DynamicChart: React.FC = function (props) {
                         color: '#b00020'
                     },
                     data: [{
-                        yAxis: 0.15
+                        yAxis: props.baseline
                     }],
                     label: {
                         show:false

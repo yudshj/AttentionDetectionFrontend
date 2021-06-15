@@ -7,14 +7,19 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { TwitterPicker } from 'react-color';
+import { BlockPicker } from 'react-color';
 import { OrderedMap } from 'immutable';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { uniqueNamesGenerator, adjectives, animals } from 'unique-names-generator';
+import { Refresh } from '@material-ui/icons';
+import randomColor from 'randomcolor';
 
-function randomRGB() {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
+const genConfig = {
+    dictionaries: [adjectives, animals],
+    style: 'capital',
+    separator: ' '
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         bottom: theme.spacing(4),
         right: theme.spacing(4),
-
     },
     bigGreyCaption: {
         display: "flex",
@@ -40,12 +44,17 @@ const useStyles = makeStyles((theme) => ({
         verticalAlign: 'center',
         width: '100vw',
         height: '100vh',
+    },
+    summary: {
+        textAlign: 'center',
+        fontSize: 'large',
+        fontWeight: 'bold'
     }
 }));
 
 const App: React.FC = (props) => {
     const [inputs, setInputs] = useState({
-        name: "Yudong",
+        name: "",
         ip: "127.0.0.1",
         port: 5000
     })
@@ -85,7 +94,20 @@ const App: React.FC = (props) => {
 
     function handleOpen() {
         setOpen(true);
-        setColor(randomRGB());
+        setInputs({
+            name: uniqueNamesGenerator(genConfig),
+            ip: "127.0.0.1",
+            port: 5000
+        })
+        setColor(randomColor());
+    }
+
+    function handleGenNameClick() {
+        setInputs({ ...inputs, name: uniqueNamesGenerator(genConfig) })
+    }
+
+    function handleGenColorClick() {
+        setColor(randomColor());
     }
 
     const deleteItem = (uuid) => {
@@ -108,7 +130,7 @@ const App: React.FC = (props) => {
                         <Box color="text.secondary" fontSize="h2.fontSize">请点击右下方的按钮添加后端</Box>
                     </div> :
                     <Container>
-                        <PersonList items={items} deleteCallback={deleteItem} theme={prefersDarkMode ? 'dark' : 'light'}/>
+                        <PersonList items={items} deleteCallback={deleteItem} theme={prefersDarkMode ? 'dark' : 'light'} />
                     </Container>
                 }
                 <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
@@ -120,28 +142,35 @@ const App: React.FC = (props) => {
                     <DialogContent>
                         <Grid container direction="row" spacing={2}>
                             <Grid item>
-                                <Grid container direction="column" spacing={2}>
-                                    <Grid item><TextField label="Name:" type="text" name="name" key="name" onChange={handleInputChange}
-                                        value={inputs.name} /></Grid>
+                                <Grid container direction="column" spacing={2} alignItems="center" justify="center">
+                                    <Grid item>
+                                        <TextField label="Name:" type="text" name="name" key="name" onChange={handleInputChange} value={inputs.name} />
+                                    </Grid>
                                     <Grid item><TextField label="IP:" type="text" name="ip" key="ip" onChange={handleInputChange}
                                         value={inputs.ip} /></Grid>
                                     <Grid item><TextField label="Port:" type="number" name="port" key="port" onChange={handleInputChange}
                                         value={inputs.port} /></Grid>
+                                    <Grid item>
+                                        <Button endIcon={<Refresh />} variant="outlined" color='default' onClick={handleGenNameClick}>随机名字</Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button endIcon={<Refresh />} variant="outlined" color='default' onClick={handleGenColorClick}>随机颜色</Button>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid item>
-                                <Grid container direction="column" spacing={2}>
-                                    <Grid item><p>{inputs.name} @ {inputs.ip}:{inputs.port}</p></Grid>
-                                    <Grid item><TwitterPicker color={color} onChangeComplete={(x) => setColor(x.hex)} /></Grid>
+                                <Grid container direction="column" spacing={2} alignItems="center" justify="center">
+                                    <Grid item><p className={classes.summary} style={{ color: color }}>{inputs.name} @ {inputs.ip}:{inputs.port}</p></Grid>
+                                    <Grid item><BlockPicker width={300} color={color} onChangeComplete={(x) => setColor(x.hex)} /></Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={handleClose} color="secondary" variant="text">
                             取消
                         </Button>
-                        <Button onClick={handleSubmit} color="primary">
+                        <Button onClick={handleSubmit} color="primary" variant="contained">
                             确认
                         </Button>
                     </DialogActions>

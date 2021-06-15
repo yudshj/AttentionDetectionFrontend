@@ -16,6 +16,7 @@ import CameraIcon from '@material-ui/icons/PhotoCamera';
 import PlayIcon from '@material-ui/icons/PlayArrow';
 
 const TOTAL_POINT = 30;
+const BASELINE = 0.15;
 
 export const Person: React.FC = function Person(props) {
     const [working, setWorking] = useState(false);
@@ -91,7 +92,7 @@ export const Person: React.FC = function Person(props) {
             </Grid>
 
             {/* <Grid item> */}
-                <DynamicChart data={data} name={props.name} color={props.color} theme={props.theme}/>
+                <DynamicChart baseline={BASELINE} data={data} name={props.name} color={props.color} theme={props.theme}/>
                 {/* </Grid> */}
             </Paper>
 

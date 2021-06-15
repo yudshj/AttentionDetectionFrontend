@@ -11,11 +11,13 @@
     "echarts": "^5.1.2",
     "echarts-for-react": "^3.0.1",
     "immutable": "^4.0.0-rc.12",
+    "randomcolor": "^0.6.2",
     "react": "^17.0.2",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
     "th": "^0.1.1",
+    "unique-names-generator": "^4.5.0",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
