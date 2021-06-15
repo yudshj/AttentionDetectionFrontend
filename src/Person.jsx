@@ -9,7 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 import { Grid } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
@@ -67,7 +67,7 @@ export const Person: React.FC = function Person(props) {
 
     return (
         <div>
-            <Paper>
+            <Card elevation={2} variant>
                 <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                 <Grid item><h2>{props.name}</h2></Grid>
                 <Grid item><ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
@@ -93,7 +93,7 @@ export const Person: React.FC = function Person(props) {
             {/* <Grid item> */}
                 <DynamicChart baseline={props.baseline} data={data} name={props.name} color={props.color} theme={props.theme}/>
                 {/* </Grid> */}
-            </Paper>
+            </Card>
 
             <Dialog
                 open={showCamera}

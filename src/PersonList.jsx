@@ -15,3 +15,5 @@ export const PersonList: React.FC = (props) => {
         </Box>
     );
 }
+
+export default PersonList;
