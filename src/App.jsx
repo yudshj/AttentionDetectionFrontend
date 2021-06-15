@@ -325,6 +325,11 @@ const App: React.FC = (props) => {
             </AppBar>
 
             <div className={classes.root}>
+
+                <Backdrop open={waiting} className={classes.backdrop}>
+                    <CircularProgress color="inherit"/>
+                </Backdrop>
+
                 {items.size === 0 ?
 
                     <div style={{
@@ -339,9 +344,6 @@ const App: React.FC = (props) => {
                         <Box color="text.secondary" fontSize="h2.fontSize">请点击右下方的按钮“+”添加后端</Box>
                     </div> :
                     <Container>
-                        <Backdrop open={waiting} className={classes.backdrop}>
-                            <CircularProgress color="inherit"/>
-                        </Backdrop>
                         <PersonList items={displayItems.data} deleteCallback={deleteItem} baseline={baseline}/>
                     </Container>
                 }
