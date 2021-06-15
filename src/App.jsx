@@ -29,7 +29,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 import {v4} from "uuid";
-import {OrderedMap} from 'immutable';
+import {OrderedMap, Map} from 'immutable';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {uniqueNamesGenerator, adjectives, animals} from 'unique-names-generator';
 import {lightGreen} from "@material-ui/core/colors";
@@ -40,6 +40,22 @@ const genConfig = {
     style: 'capital',
     separator: ' '
 }
+
+const ERROR_CODE = {
+    OK: 0,
+    FILTER_FORMAT_ERROR: -1,
+    NO_ITEM: -2,
+    NOT_FOUND: -3,
+}
+
+const ERROR_CAPTION = Map(
+    [
+        [ERROR_CODE.FILTER_FORMAT_ERROR, "请检查正则表达式语法！"],
+        [ERROR_CODE.NO_ITEM, "请点击右下方的按钮“+”添加后端"],
+        [ERROR_CODE.NOT_FOUND, "未检索到符合要求的后端"],
+        [ERROR_CODE.OK, "OK!"]
+    ]
+)
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -205,6 +221,7 @@ const App: React.FC = (props) => {
     useMemo(selectItemByFilter, [reSearch, filter, items]);
 
     function selectItemByFilter() {
+        if (items.size === 0) return { ok: ERROR_CODE.NO_ITEM, data: [], msg: "No item." };
         let ret: Array = []
         try {
             if (reSearch) {
@@ -223,9 +240,9 @@ const App: React.FC = (props) => {
             }
         } catch (e) {
             console.log(e.message);
-            return {ok: false, data: [], msg: e.message}
+            return {ok: ERROR_CODE.FILTER_FORMAT_ERROR, data: [], msg: e.message}
         }
-        return {ok: true, data: ret, msg: "OK"};
+        return {ok: (ret.length > 0 ? ERROR_CODE.OK : ERROR_CODE.NOT_FOUND), data: ret, msg: "Search OK"};
     }
 
     function onSearchChange({target: {value}}) {
@@ -330,8 +347,11 @@ const App: React.FC = (props) => {
                     <CircularProgress color="inherit"/>
                 </Backdrop>
 
-                {items.size === 0 ?
-
+                {displayItems.ok === ERROR_CODE.OK ?
+                    <Container>
+                        <PersonList items={displayItems.data} deleteCallback={deleteItem} baseline={baseline}/>
+                    </Container>
+                    :
                     <div style={{
                         display: "flex",
                         flexDirection: "column",
@@ -341,11 +361,8 @@ const App: React.FC = (props) => {
                         width: '100vw',
                         height: '80vh',
                     }}>
-                        <Box color="text.secondary" fontSize="h2.fontSize">请点击右下方的按钮“+”添加后端</Box>
-                    </div> :
-                    <Container>
-                        <PersonList items={displayItems.data} deleteCallback={deleteItem} baseline={baseline}/>
-                    </Container>
+                        <Box color="text.secondary" fontSize="h2.fontSize">{ERROR_CAPTION.get(displayItems.ok)}</Box>
+                    </div>
                 }
 
                 <div className={classes.fabGroup}>
@@ -395,7 +412,7 @@ const App: React.FC = (props) => {
                         horizontal: 'center',
                     }}
                     message={displayItems.msg}
-                    open={!displayItems.ok}
+                    open={displayItems.ok === ERROR_CODE.FILTER_FORMAT_ERROR}
                 >
                     <Alert severity="error">
                         {displayItems.msg}
