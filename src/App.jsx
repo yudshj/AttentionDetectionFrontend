@@ -33,7 +33,7 @@ import {OrderedMap, Map} from 'immutable';
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {uniqueNamesGenerator, adjectives, animals} from 'unique-names-generator';
 import {lightGreen} from "@material-ui/core/colors";
-import {FormControlLabel, Switch} from "@material-ui/core";
+import {FormControlLabel, Hidden, Switch} from "@material-ui/core";
 
 const genConfig = {
     dictionaries: [adjectives, animals],
@@ -221,7 +221,7 @@ const App: React.FC = (props) => {
     useMemo(selectItemByFilter, [reSearch, filter, items]);
 
     function selectItemByFilter() {
-        if (items.size === 0) return { ok: ERROR_CODE.NO_ITEM, data: [], msg: "No item." };
+        if (items.size === 0) return {ok: ERROR_CODE.NO_ITEM, data: [], msg: "No item."};
         let ret: Array = []
         try {
             if (reSearch) {
@@ -306,13 +306,15 @@ const App: React.FC = (props) => {
             </Menu>
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar>
-                    <IconButton onClick={onMenuClick} edge="start" className={classes.menuButton} color="inherit"
-                                aria-label="menu">
-                        <MenuIcon/>
-                    </IconButton>
+                        <IconButton onClick={onMenuClick} edge="start" className={classes.menuButton} color="inherit"
+                                    aria-label="menu">
+                            <MenuIcon/>
+                        </IconButton>
+                    <Hidden xsDown>
                     <Typography variant="h6" className={classes.title}>
                         Hawkeye
                     </Typography>
+                    </Hidden>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon/>
@@ -335,7 +337,7 @@ const App: React.FC = (props) => {
                             name="useReSearch"
                             inputProps={{'aria-label': 'use RE-search switch'}}
                         />}
-                                      label="Use RegExp?"
+                                      label={<Hidden xsDown>Use RegExp?</Hidden>}
                     />
                     {/*<Button color="inherit">Login</Button>*/}
                 </Toolbar>

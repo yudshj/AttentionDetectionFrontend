@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DynamicChart from './DynamicChart';
 import $ from 'jquery';
 import cloneDeep from 'lodash.clonedeep';
-import { Button, ButtonGroup } from "@material-ui/core";
+import {Button, ButtonGroup, Hidden} from "@material-ui/core";
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -73,7 +73,7 @@ export const Person: React.FC = function Person(props) {
                 <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                 <Grid item><h2>{props.name}</h2></Grid>
                 <Grid item><ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button startIcon={<PlayIcon/>} onClick={() => { setWorking(!working); }}>开始/结束监控</Button>
+                    <Button startIcon={<PlayIcon/>} onClick={() => { setWorking(!working); }}><Hidden xsDown>开始/结束监控</Hidden></Button>
 
                     <Button startIcon={<CameraIcon/>} onClick={() => {
                         $.getJSON(url + '/camera')
@@ -85,9 +85,9 @@ export const Person: React.FC = function Person(props) {
                                 setShowCamera(false);
                                 console.log("Camera fetch failed:" + data.readyState);
                             });
-                    }}>打开摄像头</Button>
+                    }}><Hidden xsDown>打开摄像头</Hidden></Button>
 
-                    <Button startIcon={<DeleteIcon />} onClick={()=>{props.deleteCallback(props.uuid)}} color="secondary">删除</Button>
+                    <Button startIcon={<DeleteIcon />} onClick={()=>{props.deleteCallback(props.uuid)}} color="secondary"><Hidden xsDown>删除</Hidden></Button>
                 </ButtonGroup>
                 </Grid>
             </Grid>
