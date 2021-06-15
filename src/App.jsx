@@ -60,6 +60,7 @@ const App: React.FC = (props) => {
     })
     const [items, setItems] = useState(OrderedMap());
     const [open, setOpen] = useState(false);
+    const [baseline, setBaseline] = useState(0.15);
     const [color, setColor] = useState("#000")
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
@@ -130,7 +131,7 @@ const App: React.FC = (props) => {
                         <Box color="text.secondary" fontSize="h2.fontSize">请点击右下方的按钮添加后端</Box>
                     </div> :
                     <Container>
-                        <PersonList items={items} deleteCallback={deleteItem} theme={prefersDarkMode ? 'dark' : 'light'} />
+                        <PersonList items={items} deleteCallback={deleteItem} theme={prefersDarkMode ? 'dark' : 'light'} baseline={baseline}/>
                     </Container>
                 }
                 <Fab color="primary" aria-label="add" className={classes.fab} onClick={handleOpen}>
