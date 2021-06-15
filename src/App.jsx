@@ -394,9 +394,8 @@ const App: React.FC = (props) => {
                     }}
                     message={displayItems.msg}
                     open={!displayItems.ok}
-                    onClose={handleSnackbarClose}
                 >
-                    <Alert onClose={handleSnackbarClose} severity="error">
+                    <Alert severity="error">
                         {displayItems.msg}
                     </Alert>
                 </Snackbar>
