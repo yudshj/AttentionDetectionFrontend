@@ -14,6 +14,7 @@ import { Grid } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import PlayIcon from '@material-ui/icons/PlayArrow';
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const TOTAL_POINT = 30;
 
@@ -25,6 +26,7 @@ export const Person: React.FC = function Person(props) {
     const [data, setData] = useState({ y: [], x: [] })
 
     const url = `http://${props.ip}:${props.port}`;
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     useEffect(() => {
         const fetchNewData = () => {
@@ -91,7 +93,7 @@ export const Person: React.FC = function Person(props) {
             </Grid>
 
             {/* <Grid item> */}
-                <DynamicChart baseline={props.baseline} data={data} name={props.name} color={props.color} theme={props.theme}/>
+                <DynamicChart baseline={props.baseline} data={data} name={props.name} color={props.color} theme={prefersDarkMode ? 'dark' : 'light'}/>
                 {/* </Grid> */}
             </Card>
 

@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { BlockPicker } from 'react-color';
-import { TextField, Button, makeStyles, Grid } from "@material-ui/core";
+import { TextField, Button, Grid } from "@material-ui/core";
 import { Refresh } from '@material-ui/icons';
 
 export const AddDialog: React.FC = (props) => {
+    function handleKeyPress(event) {
+        if (event.code === "Enter" && props.open) {
+            props.handleSubmit();
+        }
+    }
+
     return (
-        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" onKeyPress={handleKeyPress}>
             <DialogTitle id="form-dialog-title">监控后端信息</DialogTitle>
             <DialogContent>
                 <Grid container direction="row" spacing={2}>
