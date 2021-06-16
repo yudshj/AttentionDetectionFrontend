@@ -1,0 +1,21 @@
+{
+  "short_name": "Hawkeye",
+  "name": "Hawkeye Attention Detection Frontend",
+  "icons": [
+    {
+      "src": "eagle192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "eagle512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "orientation": "portrait"
+}
