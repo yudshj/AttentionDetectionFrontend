@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.js": "/hawkeye/static/js/main.5b7af1d1.chunk.js",
-    "main.js.map": "/hawkeye/static/js/main.5b7af1d1.chunk.js.map",
-    "runtime-main.js": "/hawkeye/static/js/runtime-main.28e603a2.js",
-    "runtime-main.js.map": "/hawkeye/static/js/runtime-main.28e603a2.js.map",
-    "static/js/2.4ab2dd7e.chunk.js": "/hawkeye/static/js/2.4ab2dd7e.chunk.js",
-    "static/js/2.4ab2dd7e.chunk.js.map": "/hawkeye/static/js/2.4ab2dd7e.chunk.js.map",
-    "static/js/3.8646d94c.chunk.js": "/hawkeye/static/js/3.8646d94c.chunk.js",
-    "static/js/3.8646d94c.chunk.js.map": "/hawkeye/static/js/3.8646d94c.chunk.js.map",
-    "index.html": "/hawkeye/index.html",
-    "service-worker.js": "/hawkeye/service-worker.js",
-    "service-worker.js.map": "/hawkeye/service-worker.js.map",
-    "static/js/2.4ab2dd7e.chunk.js.LICENSE.txt": "/hawkeye/static/js/2.4ab2dd7e.chunk.js.LICENSE.txt"
+    "main.js": "/AttentionDetectionFrontend/static/js/main.cfff961a.chunk.js",
+    "main.js.map": "/AttentionDetectionFrontend/static/js/main.cfff961a.chunk.js.map",
+    "runtime-main.js": "/AttentionDetectionFrontend/static/js/runtime-main.3f3603c4.js",
+    "runtime-main.js.map": "/AttentionDetectionFrontend/static/js/runtime-main.3f3603c4.js.map",
+    "static/js/2.4ab2dd7e.chunk.js": "/AttentionDetectionFrontend/static/js/2.4ab2dd7e.chunk.js",
+    "static/js/2.4ab2dd7e.chunk.js.map": "/AttentionDetectionFrontend/static/js/2.4ab2dd7e.chunk.js.map",
+    "static/js/3.8646d94c.chunk.js": "/AttentionDetectionFrontend/static/js/3.8646d94c.chunk.js",
+    "static/js/3.8646d94c.chunk.js.map": "/AttentionDetectionFrontend/static/js/3.8646d94c.chunk.js.map",
+    "index.html": "/AttentionDetectionFrontend/index.html",
+    "service-worker.js": "/AttentionDetectionFrontend/service-worker.js",
+    "service-worker.js.map": "/AttentionDetectionFrontend/service-worker.js.map",
+    "static/js/2.4ab2dd7e.chunk.js.LICENSE.txt": "/AttentionDetectionFrontend/static/js/2.4ab2dd7e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.28e603a2.js",
+    "static/js/runtime-main.3f3603c4.js",
     "static/js/2.4ab2dd7e.chunk.js",
-    "static/js/main.5b7af1d1.chunk.js"
+    "static/js/main.cfff961a.chunk.js"
   ]
 }
