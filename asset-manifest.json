@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/AttentionDetectionFrontend/static/js/main.cfff961a.chunk.js",
-    "main.js.map": "/AttentionDetectionFrontend/static/js/main.cfff961a.chunk.js.map",
+    "main.js": "/AttentionDetectionFrontend/static/js/main.ec0417fd.chunk.js",
+    "main.js.map": "/AttentionDetectionFrontend/static/js/main.ec0417fd.chunk.js.map",
     "runtime-main.js": "/AttentionDetectionFrontend/static/js/runtime-main.3f3603c4.js",
     "runtime-main.js.map": "/AttentionDetectionFrontend/static/js/runtime-main.3f3603c4.js.map",
     "static/js/2.4ab2dd7e.chunk.js": "/AttentionDetectionFrontend/static/js/2.4ab2dd7e.chunk.js",
@@ -16,6 +16,6 @@
   "entrypoints": [
     "static/js/runtime-main.3f3603c4.js",
     "static/js/2.4ab2dd7e.chunk.js",
-    "static/js/main.cfff961a.chunk.js"
+    "static/js/main.ec0417fd.chunk.js"
   ]
 }
