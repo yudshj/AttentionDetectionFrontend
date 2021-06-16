@@ -13,8 +13,8 @@
       "type": "image/png"
     }
   ],
-  "start_url": "https://maghsk.github.io/AttentionDetectionFrontend/",
-  "scope": "https://maghsk.github.io/AttentionDetectionFrontend/",
+  "start_url": "/AttentionDetectionFrontend/",
+  "scope": "/AttentionDetectionFrontend/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
