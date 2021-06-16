@@ -30,10 +30,10 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 
 import {v4} from "uuid";
 import {OrderedMap, Map} from 'immutable';
+import {blue} from "@material-ui/core/colors";
+import {FormControlLabel, Hidden, Switch} from "@material-ui/core";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {uniqueNamesGenerator, adjectives, animals} from 'unique-names-generator';
-import {lightGreen} from "@material-ui/core/colors";
-import {FormControlLabel, Hidden, Switch} from "@material-ui/core";
 
 const genConfig = {
     dictionaries: [adjectives, animals],
@@ -148,7 +148,8 @@ const App: React.FC = (props) => {
         () =>
             createMuiTheme({
                 palette: {
-                    primary: lightGreen,
+                    primary: blue,
+                    // secondary: deepOrange,
                     type: prefersDarkMode ? 'dark' : 'light',
                 },
             }),
