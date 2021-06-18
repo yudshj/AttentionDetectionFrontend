@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import DynamicChart from './DynamicChart';
-import $ from 'jquery';
-import cloneDeep from 'lodash.clonedeep';
 import {Button, ButtonGroup, Hidden} from "@material-ui/core";
 
 import Dialog from '@material-ui/core/Dialog';
@@ -13,6 +11,7 @@ import Card from '@material-ui/core/Card';
 import { Grid } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
+import PauseIcon from "@material-ui/icons/PauseSharp";
 import PlayIcon from '@material-ui/icons/PlayArrow';
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 
@@ -22,50 +21,63 @@ export const Person: React.FC = function Person(props) {
     const [working, setWorking] = useState(false);
     const [showCamera, setShowCamera] = useState(false);
     const [imgBase64, setImgBase64] = useState("");
-    const [count, setCount] = useState(0);
-    const [data, setData] = useState({ y: [], x: [] })
+    const [data, setData] = useState({ num: 0, y: [], x: [] })
 
-    const url = `http://${props.ip}:${props.port}`;
+    const timeId = useRef(null);
+
+    const baseurl = `http://${props.ip}:${props.port}`;
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     useEffect(() => {
-        const fetchNewData = () => {
-            $.getJSON(url + '/data').done((info) => {
-                let newData = cloneDeep(data);
+        function fetchNewData() {
+            fetch(baseurl + '/data')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (info) {
+                    let newData = {
+                        num: data.num + 1,
+                        x: data.x.concat(new Date().toLocaleTimeString()),
+                        y: data.y.concat(info.value)
+                    };
 
-                // if (count === TOTAL_POINT) {
-                //     newData.y.shift();
-                // } else {
-                //     newData.x.push(count);
-                //     setCount(count + 1);
-                // }
-                // newData.y.push(info.value);
+                    if (newData.num > TOTAL_POINT) {
+                        newData.x.shift();
+                        newData.y.shift();
+                    }
 
-                if (newData.x.length === TOTAL_POINT) {
-                    newData.x.shift();
-                    newData.y.shift();
-                }
-
-                newData.x.push(count);
-                newData.y.push(info.value);
-                setCount(count + 1);
-                setData(newData);
-            }).fail((info) => {
-                console.log("Fetching error:", info.readyState);
-            });
-        };
-
-        let timer = null;
-        if (working) {
-            if (timer === null) timer = setInterval(fetchNewData, 1000);
-        } else if (timer !== null) {
-            clearInterval(timer);
-            timer = null;
+                    setData(newData);
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         }
-        return () => { if (timer !== null) clearInterval(timer); }
-    }, [url, working, count, data])
+
+        if (working) {
+            timeId.current = setInterval(fetchNewData, 1000);
+        } else {
+            clearInterval(timeId.current);
+        }
+
+        return () => { clearInterval(timeId.current); }
+    }, [baseurl, working, data]);
 
     const handleClose = () => setShowCamera(false);
+
+    function handleCameraClick() {
+        fetch(baseurl + '/camera')
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(info) {
+                setShowCamera(true);
+                setImgBase64(info.value);
+            })
+            .catch(function(error) {
+                setShowCamera(false);
+                console.log("Camera fetch failed:" + error);
+            })
+    }
 
     return (
         <div>
@@ -73,19 +85,9 @@ export const Person: React.FC = function Person(props) {
                 <Grid container spacing={0} direction="column" alignItems="center" justify="center" >
                 <Grid item><h2>{props.name}</h2></Grid>
                 <Grid item><ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-                    <Button startIcon={<PlayIcon/>} onClick={() => { setWorking(!working); }}><Hidden xsDown>开始/结束监控</Hidden></Button>
+                    <Button startIcon={working ? <PauseIcon/> : <PlayIcon/>} onClick={() => { setWorking(!working); }}><Hidden xsDown>开始/结束监控</Hidden></Button>
 
-                    <Button startIcon={<CameraIcon/>} onClick={() => {
-                        $.getJSON(url + '/camera')
-                            .done((data) => {
-                                setImgBase64(data.value);
-                                setShowCamera(true);
-                            })
-                            .fail((data) => {
-                                setShowCamera(false);
-                                console.log("Camera fetch failed:" + data.readyState);
-                            });
-                    }}><Hidden xsDown>打开摄像头</Hidden></Button>
+                    <Button startIcon={<CameraIcon/>} onClick={handleCameraClick}><Hidden xsDown>打开摄像头</Hidden></Button>
 
                     <Button startIcon={<DeleteIcon />} onClick={()=>{props.deleteCallback(props.uuid)}} color="secondary"><Hidden xsDown>删除</Hidden></Button>
                 </ButtonGroup>

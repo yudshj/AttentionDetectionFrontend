@@ -50,8 +50,6 @@
     ]
   },
   "devDependencies": {
-    "jquery": "^3.6.0",
-    "lodash.clonedeep": "^4.5.0",
     "uuid": "^8.3.2"
   }
 }
