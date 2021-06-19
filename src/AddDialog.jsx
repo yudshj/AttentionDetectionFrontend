@@ -15,11 +15,11 @@ export const AddDialog: React.FC = (props) => {
     }
 
     return (
-        <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" onKeyPress={handleKeyPress}>
+        <Dialog fullWidth={false} maxWidth={false} open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title" onKeyPress={handleKeyPress}>
             <DialogTitle id="form-dialog-title">监控后端信息</DialogTitle>
             <DialogContent>
-                <Grid container direction="row" spacing={2}>
-                    <Grid item>
+                <Grid container direction="row" spacing={1}>
+                    <Grid item xs={12} sm={6}>
                         <Grid container direction="column" spacing={2} alignItems="center" justify="center">
                             <Grid item>
                                 <TextField label="Name:" type="text" name="name" key="name" onChange={props.handleInputChange} value={props.inputs.name} />
@@ -36,14 +36,15 @@ export const AddDialog: React.FC = (props) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={12} sm={6}>
                         <Grid container direction="column" spacing={2} alignItems="center" justify="center">
                             <Grid item><p style={{
                                 textAlign: 'center',
                                 fontSize: 'large',
-                                fontWeight: 'bold', color: props.color
+                                fontWeight: 'bold',
+                                color: props.color,
                             }}>{props.inputs.name} @ {props.inputs.ip}:{props.inputs.port}</p></Grid>
-                            <Grid item><BlockPicker width={300} color={props.color} onChangeComplete={(x) => props.setColor(x.hex)} /></Grid>
+                            <Grid item><BlockPicker color={props.color} onChangeComplete={(x) => props.setColor(x.hex)} /></Grid>
                         </Grid>
                     </Grid>
                 </Grid>

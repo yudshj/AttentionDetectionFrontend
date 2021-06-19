@@ -6,9 +6,17 @@ export const PersonList: React.FC = (props) => {
     return (
         <Box id="PersonList" p={3}>
             <Grid container spacing={2}>
-                {props.items.map((item) => (
-                    <Grid item xs={12} md={6} key={item.key}>
-                        <Person baseline={props.baseline} uuid={item.key} name={item.name} ip={item.ip} port={item.port} color={item.color} deleteCallback={props.deleteCallback} />
+                {props.items.entrySeq().map(([key,value]) => (
+                    <Grid item xs={12} md={6} key={key}>
+                        <Person
+                            baseline={props.baseline}
+                            uuid={key}
+                            name={value.name}
+                            ip={value.ip}
+                            port={value.port}
+                            color={value.color}
+                            deleteCallback={props.deleteCallback}
+                        />
                     </Grid>
                 ))}
             </Grid>

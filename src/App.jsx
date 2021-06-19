@@ -223,27 +223,24 @@ const App: React.FC = (props) => {
 
     function selectItemByFilter() {
         if (items.size === 0) return {ok: ERROR_CODE.NO_ITEM, data: [], msg: "No item."};
-        let ret: Array = []
         try {
+            let ret: OrderedMap = null;
             if (reSearch) {
                 let re: RegExp = new RegExp(filter, "i");
-                items.mapEntries(([key, value]) => {
-                    if (value.name.search(re) !== -1) {
-                        ret.push({...value, key: key})
-                    }
+                ret = items.filter((value) => {
+                    return value.name.search(re) !== -1;
                 });
             } else {
-                items.mapEntries(([key, value]) => {
-                    if (value.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1) {
-                        ret.push({...value, key: key})
-                    }
-                });
+                ret = items.filter((value) => {
+                    return value.name.toLowerCase().indexOf(filter.toLowerCase()) !== -1;
+                })
             }
+            console.log(ret);
+            return {ok: (ret.size > 0 ? ERROR_CODE.OK : ERROR_CODE.NOT_FOUND), data: ret, msg: "Search OK"};
         } catch (e) {
             console.log(e.message);
             return {ok: ERROR_CODE.FILTER_FORMAT_ERROR, data: [], msg: e.message}
         }
-        return {ok: (ret.length > 0 ? ERROR_CODE.OK : ERROR_CODE.NOT_FOUND), data: ret, msg: "Search OK"};
     }
 
     function onSearchChange({target: {value}}) {
