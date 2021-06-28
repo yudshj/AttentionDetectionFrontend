@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Hawkeye：JavaScript 程序设计课程项目
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+受疫情影响，不少线下课程、线下会议都改为了线上的形式。然而线上教学与讨论的最大问题是：相较于线下的形式，参与者更容易分心、失去专注力。本项目可以为有特殊需求的教学者提供注意力检测功能。
 
-## Available Scripts
+View code on [GitHub](https://github.com/maghsk/AttentionDetectionFrontend)
 
-In the project directory, you can run:
+![lightmode](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/maghsk.github.io_AttentionDetectionFrontend_light.webp)
 
-### `npm start`
+![darkmode](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/maghsk.github.io_AttentionDetectionFrontend_dark.webp)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 前端部署
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+git clone https://github.com/maghsk/AttentionDetectionFrontend
+cd AttentionDetectionFrontend
+npm install
+npm run build
+serve -s build
+```
 
-### `npm test`
+也可以访问 [Hawkeye](https://maghsk.github.io/AttentionDetectionFrontend/) 来测试在线DEMO！
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 后端部署
 
-### `npm run build`
+（后端使用的模型非常简单：仅仅通过表情判断用户专注度，因这部分不是本课程重点，所以做的相对比较简易）
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+repo：[AttentionDetectionBackend](https://github.com/maghsk/AttentionDetectionBackend)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+git clone https://github.com/maghsk/AttentionDetectionBackend
+cd AttentionDetectionBackend
+# install conda and required packages
+python3 ./src/main.py --use-rand 1
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+需要注意当前端部署在https协议之后时，后端需要解决https访问http的url的问题。建议解决的方法有：
 
-### `npm run eject`
+1. 反向代理；
+2. 为flask加入TLS证书和密钥；
+3. 将后端开在本地，监听127.0.0.1；
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 特点介绍
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- 支持使用正则表达式通过名称检索后端用户；
+  - 检索时采用懒惰查询，只有当用户停止输入一段时间后才真正执行查询；
+- 使用RESTful API，前后端交互相对便捷；
+- 适配暗色模式；
+- 使用react.js框架开发，UI设计选择echarts.js和Material Design，兼顾效率和美观。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
