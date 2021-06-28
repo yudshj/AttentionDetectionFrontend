@@ -1,8 +1,10 @@
+> CODE：View code on [GitHub](https://github.com/maghsk/AttentionDetectionFrontend)!
+>
+> DEMO：Try out Hawkeye demo on [github.io](https://maghsk.github.io/AttentionDetectionFrontend/)!
+
 # Hawkeye：JavaScript 程序设计课程项目
 
 受疫情影响，不少线下课程、线下会议都改为了线上的形式。然而线上教学与讨论的最大问题是：相较于线下的形式，参与者更容易分心、失去专注力。本项目可以为有特殊需求的教学者提供注意力检测功能。
-
-View code on [GitHub](https://github.com/maghsk/AttentionDetectionFrontend)
 
 ![lightmode](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/maghsk.github.io_AttentionDetectionFrontend_light.webp)
 
