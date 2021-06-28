@@ -15,6 +15,7 @@ export const PersonList: React.FC = (props) => {
                             ip={value.ip}
                             port={value.port}
                             color={value.color}
+                            protocol={value.protocol}
                             deleteCallback={props.deleteCallback}
                         />
                     </Grid>

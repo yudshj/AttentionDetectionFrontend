@@ -129,7 +129,8 @@ const App: React.FC = (props) => {
     const [inputs, setInputs] = useState({
         name: "",
         ip: "127.0.0.1",
-        port: 5000
+        port: 5000,
+        useHttps: false
     })
     const [items: OrderedMap, setItems] = useState(OrderedMap());
     const [openAddDialog, setOpenAddDialog] = useState(false);
@@ -165,6 +166,7 @@ const App: React.FC = (props) => {
             name: inputs.name,
             ip: inputs.ip,
             port: inputs.port,
+            protocol: inputs.useHttps ? "https" : "http",
             color
         };
         setItems(items.set(uuid, newPersonItem));
@@ -180,7 +182,8 @@ const App: React.FC = (props) => {
         setInputs({
             name: uniqueNamesGenerator(genConfig),
             ip: "127.0.0.1",
-            port: 5000
+            port: 5000,
+            useHttps: false
         })
         setColor(randomColor());
     }
@@ -277,6 +280,10 @@ const App: React.FC = (props) => {
     function handleMenuClose() {
         setAnchorEl(null);
         setOpenMenu(false);
+    }
+
+    function handleSwitch({target: {name, checked}}) {
+        setInputs(ipt => ({...ipt, [name]: checked}))
     }
 
     return (
@@ -386,6 +393,7 @@ const App: React.FC = (props) => {
                     handleGenNameClick={handleGenNameClick}
                     handleInputChange={handleInputChange}
                     handleSubmit={handleSubmit}
+                    handleSwitchChange={handleSwitch}
                     inputs={inputs}
                     open={openAddDialog}
                     setColor={setColor}

@@ -4,7 +4,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { BlockPicker } from 'react-color';
-import { TextField, Button, Grid } from "@material-ui/core";
+import {TextField, Button, Grid, Switch, FormControlLabel} from "@material-ui/core";
 import { Refresh } from '@material-ui/icons';
 
 export const AddDialog: React.FC = (props) => {
@@ -29,6 +29,12 @@ export const AddDialog: React.FC = (props) => {
                             <Grid item><TextField label="Port:" type="number" name="port" key="port" onChange={props.handleInputChange}
                                 value={props.inputs.port} /></Grid>
                             <Grid item>
+                                <FormControlLabel
+                                    label="使用 https"
+                                    control={<Switch color='primary' checked={props.inputs.useHttps} onChange={props.handleSwitchChange} name="useHttps"/>}
+                                />
+                            </Grid>
+                            <Grid item>
                                 <Button endIcon={<Refresh />} variant="outlined" color='default' onClick={props.handleGenNameClick}>随机名字</Button>
                             </Grid>
                             <Grid item>
@@ -38,12 +44,16 @@ export const AddDialog: React.FC = (props) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <Grid container direction="column" spacing={2} alignItems="center" justify="center">
-                            <Grid item><p style={{
-                                textAlign: 'center',
-                                fontSize: 'large',
-                                fontWeight: 'bold',
-                                color: props.color,
-                            }}>{props.inputs.name} @ {props.inputs.ip}:{props.inputs.port}</p></Grid>
+                            <Grid item>
+                                <p style={{
+                                    textAlign: 'center',
+                                    fontSize: 'large',
+                                    fontWeight: 'bold',
+                                    color: props.color,
+                                }}>
+                                    {props.inputs.name} @ {props.inputs.useHttps ? "https://" : "http://"}{props.inputs.ip}:{props.inputs.port}
+                                </p>
+                            </Grid>
                             <Grid item><BlockPicker color={props.color} onChangeComplete={(x) => props.setColor(x.hex)} /></Grid>
                         </Grid>
                     </Grid>

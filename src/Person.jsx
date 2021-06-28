@@ -25,7 +25,7 @@ export const Person: React.FC = function Person(props) {
 
     const timeId = useRef(null);
 
-    const baseurl = `http://${props.ip}:${props.port}`;
+    const baseurl = `${props.protocol}://${props.ip}:${props.port}`;
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     useEffect(() => {
