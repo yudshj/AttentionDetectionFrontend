@@ -41,6 +41,38 @@ python3 ./src/main.py --use-rand 1
 2. 为flask加入TLS证书和密钥；
 3. 将后端开在本地，监听127.0.0.1；
 
+### API list
+
+`/data`
+
+- 返回的json对象具有名为value的属性，其内容为一个实数，表示当前的专注度评分。
+- 例如：`{"value": 0.25}`
+
+`/camera`
+
+- 返回的json对象具有名为value的属性，其内容为一个字符串，表示用户当前摄像机经过base64编码后的图像。
+- 例如：`{"value": "/9j/4AAQSkZJRgABAQEAkACQAAD/4hAI...ki+48n7VvKNBZ6nOOG++t/TAf/Z"}`
+
+## 使用指南
+
+### 添加后端
+
+点击浮动按钮“➕”即可添加一个后端。
+
+![添加后端dialog](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/%E6%88%AA%E5%B1%8F2021-07-02%2016.02.21.png)
+
+直接输入后端的信息，点击确认即可完成添加。
+
+### 检索用户
+
+在顶栏中的搜索框中输入字符串即可开始检索。也可以使用正则表达式进行检索：
+
+![常规检索](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/%E5%B8%B8%E8%A7%84%E6%A3%80%E7%B4%A2.png)
+
+![正则表达式检索](https://markdown-1252899564.cos.ap-beijing.myqcloud.com/typora/img/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A3%80%E7%B4%A2.png)
+
+检索时采用懒惰查询，只有当用户停止输入一段时间后才真正执行查询，这样可以在用户较多的情况下，减少计算量，提高响应速度。
+
 ## 特点介绍
 
 - 支持使用正则表达式通过名称检索后端用户；
